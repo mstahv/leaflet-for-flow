@@ -3,7 +3,7 @@
 
     <groupId>org.vaadin</groupId>
     <artifactId>leaflet-for-flow</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <name>LeafletJS for Flow</name>
     <description>Integration of LeafletJS for Vaadin 10+</description>
 
@@ -30,7 +30,7 @@
         <url>https://github.com/mstahv/leaflet-for-flow</url>
         <connection>scm:git:git://github.com/mstahv/leaflet-for-flow.git</connection>
         <developerConnection>scm:git:ssh://git@github.com:/mstahv/leaflet-for-flow.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>leaflet-for-flow-1.0</tag>
     </scm>
 
     <issueManagement>
