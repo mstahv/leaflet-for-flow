@@ -1,0 +1,5 @@
+vaadin-dialog-overlay {
+    /*LeafletJS on level 400 */
+    z-index: 500;
+}
+
