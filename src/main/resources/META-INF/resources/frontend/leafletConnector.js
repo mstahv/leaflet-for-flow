@@ -38,22 +38,28 @@ window.Vaadin.Flow.leafletConnector = {
           c.$server.updateValue(currentValue)
         }
 
-        var mymap = c.$connector.mymap = L.map(c.id).setView([61, 22], 5);
+        window.setTimeout(function() {
 
-        L.DomUtil.addClass(mymap._container,'crosshair-cursor-enabled');
+            var mymap = c.$connector.mymap = L.map(c.id).setView([61, 22], 5);
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: 'Map data © <a href=\"https://openstreetmap.org\">OpenStreetMap</a> contributors',
-        maxZoom: 18,
-      }).addTo(mymap);
+            L.DomUtil.addClass(mymap._container,'crosshair-cursor-enabled');
 
-      c.style.cursor = "crosshair";
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'Map data © <a href=\"https://openstreetmap.org\">OpenStreetMap</a> contributors',
+            maxZoom: 18,
+            }).addTo(mymap);
 
-      function onMapClick(e) {
-        c.$connector.setPoint(e.latlng.lat, e.latlng.lng);
-      }
-    
-      mymap.on('click', onMapClick);
+          c.style.cursor = "crosshair";
+
+          function onMapClick(e) {
+            c.$connector.setPoint(e.latlng.lat, e.latlng.lng);
+          }
+
+          mymap.on('click', onMapClick);
+
+
+        }, 10);
+
 
 /*
         var baseconfig =  JSON.parse(customConfig) || {

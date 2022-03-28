@@ -19,8 +19,8 @@ import org.locationtech.jts.geom.Point;
 @Tag("div")
 @JavaScript("//unpkg.com/leaflet@1.3.4/dist/leaflet.js")
 @StyleSheet("//unpkg.com/leaflet@1.3.4/dist/leaflet.css")
-@JavaScript("frontend://leafletConnector.js")
-@StyleSheet("frontend://leafletCssHacks.css")
+@JavaScript("./leafletConnector.js")
+//@StyleSheet("frontend://leafletCssHacks.css")
 public class LeafletPointSelector extends Component implements HasSize, Field<LeafletPointSelector, Point> {
 
     private final String id = UUID.randomUUID().toString();

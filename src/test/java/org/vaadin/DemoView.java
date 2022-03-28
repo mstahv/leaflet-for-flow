@@ -30,8 +30,7 @@ public class DemoView extends Div {
             map.setValue(createPoint);
         });
         add(b4);
-        
-        
+
         Button b3 = new Button("Show in Dialog", e -> {
             Dialog dialog = new Dialog();
             final LeafletPointSelector leafletMap = new LeafletPointSelector();
@@ -42,6 +41,22 @@ public class DemoView extends Div {
         });
         add(b3);
 
-        
+        Button b5 = new Button("Show in Dialog that opens in Dialog", e -> {
+            Button b6 = new Button("Open selector");
+            Dialog dialog2 = new Dialog();
+            final LeafletPointSelector leafletMap = new LeafletPointSelector();
+            leafletMap.setHeight("300px");
+            leafletMap.setWidth("500px");
+            dialog2.add(leafletMap);
+            b6.addClickListener(e2 -> {
+                dialog2.open();
+            });
+            Dialog dialog = new Dialog();
+            dialog.setModal(true);
+            dialog.add(b6);
+            dialog.open();
+        });
+        add(b5);
+
     }
 }
