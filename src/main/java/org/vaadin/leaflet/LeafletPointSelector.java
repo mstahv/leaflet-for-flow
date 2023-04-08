@@ -8,6 +8,7 @@ import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.dependency.JavaScript;
 import com.vaadin.flow.component.dependency.StyleSheet;
+import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.function.SerializableConsumer;
 import java.util.UUID;
 import org.github.legioth.field.Field;
@@ -20,7 +21,7 @@ import org.locationtech.jts.geom.Point;
 @JavaScript("//unpkg.com/leaflet@1.3.4/dist/leaflet.js")
 @StyleSheet("//unpkg.com/leaflet@1.3.4/dist/leaflet.css")
 @JavaScript("./leafletConnector.js")
-//@StyleSheet("frontend://leafletCssHacks.css")
+//@StyleSheet("./leafletCssHacks.css")
 public class LeafletPointSelector extends Component implements HasSize, Field<LeafletPointSelector, Point> {
 
     private final String id = UUID.randomUUID().toString();
@@ -36,8 +37,8 @@ public class LeafletPointSelector extends Component implements HasSize, Field<Le
     }
 
     protected void sendPointToClient(Point p) {
-        runBeforeClientResponse(ui -> getElement()
-                .callFunction("$connector.setPoint", p.getCoordinate().y, p.getCoordinate().x)
+        runBeforeClientResponse(ui -> getElement().callJsFunction(
+                "$connector.setPoint", p.getCoordinate().y, p.getCoordinate().x)
         );
     }
 
@@ -48,10 +49,11 @@ public class LeafletPointSelector extends Component implements HasSize, Field<Le
         if(getValue() != null) {
             sendPointToClient(getValue());
         }
+        injectZIndexFix();
     }
 
     private void initConnector() {
-        runBeforeClientResponse(ui -> ui.getPage().executeJavaScript(
+        runBeforeClientResponse(ui -> ui.getPage().executeJs(
                 "window.Vaadin.Flow.leafletConnector.initLazy($0)",
                 getElement()));
     }
@@ -65,6 +67,14 @@ public class LeafletPointSelector extends Component implements HasSize, Field<Le
     private void updatePosition(double lat, double lon) {
         Point point = gf.createPoint(new Coordinate(lon, lat));
         valueMapper.setModelValue(point, true);
+    }
+
+    protected void injectZIndexFix() {
+        // Without this a map in overlay gets under map in actual Vaadin content
+        // No idea why z index is used in leaflet
+        Element style = new Element("style");
+        style.setText(".leaflet-pane {z-index: 0 !important;} ");
+        UI.getCurrent().getElement().appendChild(style);
     }
 
 }
